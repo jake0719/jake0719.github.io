@@ -6,7 +6,7 @@
   <link href="https://www.jk0520.com/atom.xml" rel="self"/>
   
   <link href="https://www.jk0520.com/"/>
-  <updated>2021-08-05T09:37:39.589Z</updated>
+  <updated>2021-08-05T10:24:05.400Z</updated>
   <id>https://www.jk0520.com/</id>
   
   <author>
@@ -15,6 +15,26 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>hexo同步内容到github Pages</title>
+    <link href="https://www.jk0520.com/2021/08/05/hexo-github/"/>
+    <id>https://www.jk0520.com/2021/08/05/hexo-github/</id>
+    <published>2021-08-05T09:36:50.000Z</published>
+    <updated>2021-08-05T10:24:05.400Z</updated>
+    
+    <content type="html"><![CDATA[<h3 id="Hexo同步github-Pages"><a href="#Hexo同步github-Pages" class="headerlink" title="Hexo同步github Pages"></a>Hexo同步github Pages</h3><p>hexo下面的博客内容想要同步到github Pages下的操作流程如下。</p><h4 id="1-github-pages初始化"><a href="#1-github-pages初始化" class="headerlink" title="1.github pages初始化"></a>1.github pages初始化</h4><p>进入github登录后，右上角+符号里点击菜单新建一个仓库：</p><p><img src="/images/pasted-7.png" alt="upload successful"><br>上图中Repository name必须填写账号用户名，后面加上.github.io<br>然后勾选Add a Readme file。<br>确认新建仓库后进入仓库页面点击settings</p><p><img src="/images/pasted-8.png" alt="upload successful"></p><p>拉下页面下面Github Pages项， 点击check it out here！</p><p><img src="/images/pasted-9.png" alt="upload successful"></p><p>看到你的github个人博客页面已经生成。<br><img src="/images/pasted-11.png" alt="upload successful"><br>点击按钮Choose a theme选择一个博客样式主题，然后commit changes。再进入你的github博客网址[用户名].github.io，可以看到初始化的首页了。</p><p><img src="/images/pasted-12.png" alt="upload successful"></p><h4 id="2-Hexo配置"><a href="#2-Hexo配置" class="headerlink" title="2.Hexo配置"></a>2.Hexo配置</h4><p>在博客的根目录下创建一个文件夹admin_script 用于存放脚本，然后新建一个脚本，下上下面代码并保存，给脚本执行权限</p><p>        mkdir admin_script<br>        cd admin_script<br>        vi hexo-g.sh  #新建脚本<br>编辑hexo-g.sh脚本文件：</p><p>        hexo g &amp;&amp; hexo d  #hexo生成静态页面并发布的命令<br>然后增加脚本执行权限：</p><p>        chmod +x hexo-g.sh<br>        <br>然后在hexo主配置文件_config.yml的admin项里增加一条（如下图）：</p><pre><code>     deployCommand: ./admin_script/hexo-g.sh</code></pre><p><img src="/images/pasted-15.png" alt="upload successful"></p><p>同时配置文件里的deployment项替换成下面所示：<br>    # Deployment<br>    ## Docs: <a href="https://hexo.io/docs/deployment.html">https://hexo.io/docs/deployment.html</a><br>    deploy:<br>      type: git<br>      repository: <a href="mailto:&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;">&#103;&#x69;&#x74;&#64;&#103;&#105;&#x74;&#104;&#117;&#98;&#x2e;&#x63;&#111;&#109;</a>:用户名/用户名.github.io.git<br>      branch: main<br>branch分支我选择的是默认的main，有些人用master，看github里自己是怎样配置的。</p><h5 id="SSH连接github配置"><a href="#SSH连接github配置" class="headerlink" title="SSH连接github配置"></a>SSH连接github配置</h5><p>ubuntu服务器配置git账户，Name和Email是注册的github账号名字和邮箱</p><pre><code>     git config --global user.name &quot;Name&quot;     git config --global user.email &quot;Email&quot;     </code></pre><p>博客系统下生成ssh公私钥，如果从来没生成过，就执行：</p><p>         ssh-keygen -t rsa -C “Email”<br>这样会在个人用户根目录下隐藏目录.ssh下生成公钥（id_rsa.pub）和私钥，将公钥内容拷贝下来.粘贴到github的ssh公钥配置里。<br>操作流程，打开github的配置页面settings：</p><p><img src="/images/pasted-16.png" alt="upload successful"></p><p>在上图中点击左边菜单SSH and GPG keys， 然后点击右边按钮New SSH key，将公钥内容粘贴到key的输入框中，title可以随意填。<br><img src="/images/pasted-17.png" alt="upload successful"></p><p>保存好，hexo服务器就可以同步用git同步内容到github了。hexo-admin中新增文章，然后点击deploy菜单，输入提交message，点击deploy部署按钮，就可以同步到github了。下图是我同步第一篇文章的日志。<br><img src="/images/pasted-14.png" alt="upload successful"></p><p>部署好后，打开我的github Pages主页，就可以看到我的hexo博客和github Pages已经内容一致了。</p>]]></content>
+    
+    
+      
+      
+    <summary type="html">&lt;h3 id=&quot;Hexo同步github-Pages&quot;&gt;&lt;a href=&quot;#Hexo同步github-Pages&quot; class=&quot;headerlink&quot; title=&quot;Hexo同步github Pages&quot;&gt;&lt;/a&gt;Hexo同步github Pages&lt;/h3&gt;&lt;p&gt;hexo下面</summary>
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>Hexo的个人博客系统搭建</title>
