@@ -6,7 +6,7 @@
   <link href="https://www.jk0520.com/atom.xml" rel="self"/>
   
   <link href="https://www.jk0520.com/"/>
-  <updated>2021-08-06T07:54:54.788Z</updated>
+  <updated>2021-11-22T09:16:03.638Z</updated>
   <id>https://www.jk0520.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>鲲鹏aarch64架构的centos7 安装mysql</title>
+    <link href="https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/"/>
+    <id>https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</id>
+    <published>2021-11-21T03:13:11.000Z</published>
+    <updated>2021-11-22T09:16:03.638Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;之前使用阿里云linux服务器安装mysql没碰到什么问题，最近在鲲鹏服务器的CentOs7系统里尝试着安装mysql，结果碰到各种问题。终于零距离初步接触了解了下鲲鹏服务器的与众不同。&lt;/p&gt;
+&lt;p&gt;先简单认识下&lt;em&gt;&lt;strong&gt;鲲鹏服务器&lt;/strong&gt;&lt;/em</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>hexo同步内容到github Pages</title>

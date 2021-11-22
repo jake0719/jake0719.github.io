@@ -1,6 +1,63 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>鲲鹏aarch64架构的centos7 安装mysql</title>
+    <url>/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</url>
+    <content><![CDATA[<p>之前使用阿里云linux服务器安装mysql没碰到什么问题，最近在鲲鹏服务器的CentOs7系统里尝试着安装mysql，结果碰到各种问题。终于零距离初步接触了解了下鲲鹏服务器的与众不同。</p>
+<p>先简单认识下<em><strong>鲲鹏服务器</strong></em>。</p>
+<p><em><strong>鲲鹏</strong></em>原指华为海思在2019年1月初发布的一款兼容ARM指令集的服务器芯片鲲鹏920，性能强悍，配备了64个物理核心，单核实力从CPU算力benchmark的角度对比，大约持平于同期X86的主流服务器芯片，整体多核多线程算力较同期的X86芯片更强大。</p>
+<p>当初看到服务器的配置，也惊讶了一嘴，64核的CPU，228G内存，看价格就知道配置多豪华了。</p>
+<p><img src="/images/pasted-20.png" alt="upload successful"></p>
+<p>性能放一边，回过头来继续看服务器的运维体验。</p>
+<p>拿到服务器整好基础环境后，开始安装本地mysql数据库，因为一直用mysql5.7，很稳定没啥问题，暂时不打算升级到mysql新版本8.0。</p>
+<p>安装环境：</p>
+<ul>
+<li>CentOs 7.9 </li>
+<li>服务器CPU内核版本 : 4.18.0-305.10.2.el7.aarch64</li>
+<li>Shell： Zsh 5.0.2 (aarch64-redhat-linux-gnu)</li>
+</ul>
+<p>linux上安装mysql一般有两种方式：rpm安装和源码安装。<br>先试了rpm安装方式，结果安装到最后发生404错误，以下链接404：</p>
+<figure class="highlight plaintext"><table><tbody><tr><td class="code"><pre><span class="line">Loading mirror speeds from cached hostfile</span><br><span class="line">http://repo.mysql.com/yum/mysql-5.7-community/el/7/aarch64/repodata/repomd.xml: [Errno 14] HTTP Error 404 - Not Found</span><br></pre></td></tr></tbody></table></figure>
+<p>错误信息如图：</p>
+<p><img src="/images/pasted-21.png" alt="upload successful"></p>
+<p>尝试解决这个问题都不行，最后发现这个是因为cpu内核不同导致的。 鲲鹏CPU使用的是arm指令集架构，与以前Intel和AMD的CPU的x86架构不同，前者是精简指令集运算（Reduced Instruction Set Computing，RISC），后者是复杂指令集运算（Complex Instruction Set Computing，CISC）。arm一般是用在移动通讯设备上的，华为搞这块起家的，现在老美打压华为，芯片管控，想想也能理解。</p>
+<p>网上有人也碰到类似问题，用mysql源码和boost库重新编译安装成功的。于是，下载mysql源码包和boost库源码包重新cmake编译安装，但是我试了几次，mysql5.7和boost1.59一起cmake就出错，后来换成mysql5.6重新cmake，编译安装成功后，启动始终有错误，试了各种办法都无法成功启动mysql。后来看到mysql自己也提供了含boost的源码包，于是也下载下来安装，但是编译失败，出现了之前一样的错误。</p>
+<p>有兴趣的朋友可以尝试华为提供的方法 <a href="https://support.huaweicloud.com/prtg-kunpengdbs/kunpengmysql5727_02_0008.html">“鲲鹏服务器Boostkit套件编译安装”</a></p>
+<p>看来，鲲鹏的arm架构兼容mysql还是有问题。后来再次搜索，忽然发现华为提供了基于aarch64架构的mysql安装包rpm，版本是mysql5.7.27。<br>安装过程如下：</p>
+<p><em><strong>配置本地yum源</strong></em></p>
+<p>备份原yum库文件并将鲲鹏源的新配置写入repo文件。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">备份原库文件夹 #mv /etc/yum.repos.d/ /etc/yum.repos.d-bak</span><br><span class="line">重新创建库目录 #Mkdir /etc/yum.repos.d</span><br><span class="line">写入新的repo文件 #echo -e "[kunpeng]\nname=CentOS-kunpeng - Base - mirrors.huaweicloud.com\nbaseurl=https://mirrors.huaweicloud.com/kunpeng/yum/el/7/aarch64/\ngpgcheck=0\nenabled=1" &gt; /etc/yum.repos.d/CentOS-Base-kunpeng.repo</span><br></pre></td></tr></tbody></table></figure>
+
+<p><em><strong>安装RPM包</strong></em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">清除缓存。 #yum clean all</span><br><span class="line">创建缓存。 #yum makecache</span><br><span class="line">安装数据库rpm包。 #yum -y install mysql-5.7.27-1.el7.aarch64 --enablerepo=kunpeng</span><br></pre></td></tr></tbody></table></figure>
+<p><img src="/images/pasted-22.png" alt="upload successful"></p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">查看安装后的rpm包。 #rpm -qa | grep mysql</span><br><span class="line">如果/etc/my.cnf配置文件的组和用户不是mysql用户和组，要修改为mysql:mysql。 #chown mysql:mysql /etc/my.cnf</span><br></pre></td></tr></tbody></table></figure>
+<p>检查my.cnf里配置的目录是否用户和组都是mysql，不是的话，都要修改好用户和组<br><img src="/images/pasted-23.png" alt="upload successful"></p>
+<p>然后初始化mysql：</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">/usr/local/mysql/bin/mysqld --defaults-file=/etc/my.cnf --initialize --basedir=/usr/local/mysql --datadir=/var/lib/mysql</span><br></pre></td></tr></tbody></table></figure>
+<p>如果出现以下错误，需要额外安装些华为提供的lib文件：</p>
+<blockquote>
+<blockquote>
+<blockquote>
+<p>/usr/local/mysql/bin/mysqld: error while loading shared libraries: libaio.so.1: cannot open shared object file: No such file or directory</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><strong>采用镜像站RPM安装方式安装，需要额外做以下操作步骤避免初始化数据库失败。(华为官网说是安装前操作，我在安装后操作也没问题)</strong></p>
+<ol>
+<li>定位到服务器“/home”目录下，下载rpm-bug.zip。<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">cd /home</span><br><span class="line">wget https://mirrors.huaweicloud.com/kunpeng/archive/kunpeng_solution/database/patch/rpm-bug.zip</span><br></pre></td></tr></tbody></table></figure></li>
+<li>解压压缩包。 <figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">unzip rpm-bug.zip</span><br></pre></td></tr></tbody></table></figure></li>
+<li>进入解压后的文件目录并将其中的文件放入到对应的库文件目录中（如果有是否重写文件等提示，则输入y然后回车）。<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">cd rpm-bug</span><br><span class="line">cp libatomic.so.1 /usr/lib64/</span><br><span class="line">cp libstdc++.so.6.0.24 /lib64/</span><br><span class="line">rm /lib64/libstdc++.so.6</span><br><span class="line">ln -s /lib64/libstdc++.so.6.0.24 /lib64/libstdc++.so.6</span><br><span class="line">cp libaio.so.1.0.1 /usr/lib64/libaio.so.1</span><br></pre></td></tr></tbody></table></figure></li>
+</ol>
+<p>上述操作完成后再执行mysql初始化命令，完成初始化后，就可以启动mysql了,安装的时候在系统启动目录（/etc/init.d）下生成了mysql文件.<br>第一次需要手动启动mysql服务 </p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">/etc/init.d/mysql start</span></span><br></pre></td></tr></tbody></table></figure>
+<p>后面不用再手动启动；服务器重启的话，mysql会自动启动。</p>
+<p>初始化的时候，如果终端命令行里有回显log，可以在里面找到初始化的root密码；如果没有，可以在my.cnf配置文件里配置的错误日志文件里找到(如下图所示)；然后进入mysql，修改root密码。</p>
+<p><img src="/images/pasted-24.png" alt="upload successful"></p>
+<p>以上rpm安装信息部分也可以参考华为官方信息 <a href="https://support.huaweicloud.com/instg-kunpengdbs/kunpengmysql8017_03_0011.html">鲲鹏服务器mysql镜像站RPM安装</a></p>
+]]></content>
+  </entry>
+  <entry>
     <title>hexo同步内容到github Pages</title>
     <url>/2021/08/05/hexo-github/</url>
     <content><![CDATA[<h3 id="Hexo同步github-Pages"><a href="#Hexo同步github-Pages" class="headerlink" title="Hexo同步github Pages"></a>Hexo同步github Pages</h3><p>hexo下面的博客内容想要同步到github Pages下的操作流程如下。</p>
