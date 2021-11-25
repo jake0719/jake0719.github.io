@@ -67,7 +67,7 @@
 ]]></content>
       <tags>
         <tag>ubuntu</tag>
-        <tag>s&#39;sh</tag>
+        <tag>ssh</tag>
       </tags>
   </entry>
   <entry>
@@ -126,6 +126,10 @@
 <p><img src="/images/pasted-24.png" alt="upload successful"></p>
 <p>以上rpm安装信息部分也可以参考华为官方信息 <a href="https://support.huaweicloud.com/instg-kunpengdbs/kunpengmysql8017_03_0011.html">鲲鹏服务器mysql镜像站RPM安装</a></p>
 ]]></content>
+      <tags>
+        <tag>CentOs</tag>
+        <tag>mysql</tag>
+      </tags>
   </entry>
   <entry>
     <title>hexo同步内容到github Pages</title>

@@ -6,7 +6,7 @@
   <link href="https://www.jk0520.com/atom.xml" rel="self"/>
   
   <link href="https://www.jk0520.com/"/>
-  <updated>2021-11-25T03:53:17.563Z</updated>
+  <updated>2021-11-25T03:58:12.251Z</updated>
   <id>https://www.jk0520.com/</id>
   
   <author>
@@ -21,7 +21,7 @@
     <link href="https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/"/>
     <id>https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</id>
     <published>2021-11-24T03:45:00.000Z</published>
-    <updated>2021-11-25T03:53:17.563Z</updated>
+    <updated>2021-11-25T03:58:12.251Z</updated>
     
     
       
@@ -38,7 +38,7 @@
     
     <category term="ubuntu" scheme="https://www.jk0520.com/tags/ubuntu/"/>
     
-    <category term="s&#39;sh" scheme="https://www.jk0520.com/tags/s-sh/"/>
+    <category term="ssh" scheme="https://www.jk0520.com/tags/ssh/"/>
     
   </entry>
   
@@ -46,8 +46,8 @@
     <title>鲲鹏aarch64架构的centos7 安装mysql</title>
     <link href="https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/"/>
     <id>https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</id>
-    <published>2021-11-21T03:13:11.000Z</published>
-    <updated>2021-11-22T09:16:03.638Z</updated>
+    <published>2021-11-21T03:13:00.000Z</published>
+    <updated>2021-11-25T03:58:40.023Z</updated>
     
     
       
@@ -61,6 +61,10 @@
     
     
     
+    
+    <category term="CentOs" scheme="https://www.jk0520.com/tags/CentOs/"/>
+    
+    <category term="mysql" scheme="https://www.jk0520.com/tags/mysql/"/>
     
   </entry>
   

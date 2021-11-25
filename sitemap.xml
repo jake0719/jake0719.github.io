@@ -2,16 +2,16 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</loc>
+    <loc>https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</loc>
     
     <lastmod>2021-11-25</lastmod>
     
   </url>
   
   <url>
-    <loc>https://www.jk0520.com/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</loc>
+    <loc>https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</loc>
     
-    <lastmod>2021-11-22</lastmod>
+    <lastmod>2021-11-25</lastmod>
     
   </url>
   
@@ -123,7 +123,21 @@
   </url>
   
   <url>
-    <loc>https://www.jk0520.com/tags/s-sh/</loc>
+    <loc>https://www.jk0520.com/tags/ssh/</loc>
+    <lastmod>2021-11-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jk0520.com/tags/CentOs/</loc>
+    <lastmod>2021-11-25</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.6</priority>
+  </url>
+  
+  <url>
+    <loc>https://www.jk0520.com/tags/mysql/</loc>
     <lastmod>2021-11-25</lastmod>
     <changefreq>daily</changefreq>
     <priority>0.6</priority>
