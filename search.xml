@@ -1,6 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>UBUNTU 16.04 升级OPENSSH 8.8P1</title>
+    <url>/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</url>
+    <content><![CDATA[<p>因为受到监管报告，服务器有SSL/TLS协议信息泄露漏洞(CVE-2016-2183)漏洞，我们的几台ubuntu服务器要升级ssl和openssh。查了下最新的openssh版本已经8.8了，网上大部分升级教程都是低版本的ssh，还是直接升级到最新的。</p>
+<p>先容我吐槽下。这两年伟大的ZF在网络监管方面越来越严格，同时也意味着一般企业公司在信息安全方面支出也越来越高。做个公安部的安保等级每年要花费近十万大洋，做个通信管理局的通保每年也要花费不少。对于IT创业公司来说，真的太难了。</p>
+<p><strong>安装环境</strong></p>
+<ul>
+<li>Ubuntu 16.04</li>
+<li>内核版本 : Linux 4.4.0-170-generic</li>
+<li>Shell： zsh 5.1.1 (x86_64-ubuntu-linux-gnu)</li>
+<li>openssl版本： OpenSSL 1.0.2g  1 Mar 2016</li>
+<li>openssh版本： OpenSSH_7.2p2 Ubuntu-4ubuntu2.10</li>
+</ul>
+<p>因为要升级ssh，ssh进程要停掉，所以要先安装telnet来连接服务器。</p>
+<h5 id="安装telnet"><a href="#安装telnet" class="headerlink" title="安装telnet"></a>安装telnet</h5><figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">sudo apt-get install openbsd-inetd telnetd telnet</span><br><span class="line">/etc/init.d/openbsd-inetd restart     # 启动服务</span><br><span class="line">netstat -anpt|grep 23                 # 查看telnet服务的默认端口是否启动</span><br><span class="line">telnet localhost &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;  # 测试登录</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="下载需要的包"><a href="#下载需要的包" class="headerlink" title="下载需要的包"></a>下载需要的包</h5><p>服务器上找个目录存放这次升级要下载的包，进入该目录依次下载3个压缩包。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">wget http://zlib.net/zlib-1.2.11.tar.gz   </span><br><span class="line">wget --no-check-certificate https://www.openssl.org/source/openssl-1.1.1l.tar.gz </span><br><span class="line">wget --no-check-certificate https://fastly.cdn.openbsd.org/pub/OpenBSD/OpenSSH/portable/openssh-8.8p1.tar.gz</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="安装依赖包zlib"><a href="#安装依赖包zlib" class="headerlink" title="安装依赖包zlib"></a>安装依赖包zlib</h5><p><em><strong>退出ssh登录，以telnet方式进入服务器，进入之前下载包的目录</strong></em></p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">tar xvf zlib-1.2.11.tar.gz</span><br><span class="line">cd zlib-1.2.11</span><br><span class="line">./configure --prefix=/usr/local/zlib</span><br><span class="line">make -j 8</span><br><span class="line">sudo make install #非root账号执行这条命令要sudo权限</span><br></pre></td></tr></tbody></table></figure>
+<p>如果运行“./configure –prefix=/usr/local/zlib” 出现错误，请检查gcc</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">检测是否安装</span></span><br><span class="line">cc -v</span><br><span class="line"><span class="meta">#</span><span class="bash">安装</span></span><br><span class="line">sudo apt-get install gcc</span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="升级更新openssl版本"><a href="#升级更新openssl版本" class="headerlink" title="升级更新openssl版本"></a>升级更新openssl版本</h5><p>回到下载包的目录，依次执行以下命令</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">tar zxvf openssl-1.1.1l.tar.gz</span><br><span class="line">cd openssl-1.1.1l</span><br><span class="line">./config shared zlib</span><br><span class="line">make -j 8</span><br><span class="line">sudo make install</span><br></pre></td></tr></tbody></table></figure>
+
+<p>备份原来的openssl,创建软链接到系统位置</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">sudo mv /usr/bin/openssl /usr/bin/openssl.bak </span><br><span class="line">sudo mv /usr/include/openssl /usr/include/openssl.bak </span><br><span class="line">sudo ln -s /usr/local/bin/openssl /usr/bin/openssl</span><br><span class="line">sudo ln -s /usr/local/include/openssl /usr/include/openssl</span><br></pre></td></tr></tbody></table></figure>
+
+<p>添加openssl的lib库到系统并使用。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">sudo echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/openssl.conf</span><br><span class="line">ldconfig </span><br><span class="line"><span class="meta">#</span><span class="bash">ldconfig是一个动态链接库管理命令，其目的为了让动态链接库为系统所共享。 ldconfig的主要用途： 默认搜寻/lilb和/usr/lib，以及配置文件/etc/ld.so.conf内所列的目录下的库文件。</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果这里因为非root账号修改系统文件权限不够出现以下类似错误：</p>
+<blockquote>
+<p>zsh: permission denied: /etc/ld.so.conf.d/openssl.conf</p>
+</blockquote>
+<p>请这样执行命令：</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">sudo sh -c 'echo "/usr/local/lib" &gt; /etc/ld.so.conf.d/openssl.conf'</span><br></pre></td></tr></tbody></table></figure>
+
+<p>查看新的openssl版本：</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">openssl version -a</span><br><span class="line"><span class="meta">#</span><span class="bash">更新完成显示：OpenSSL 1.1.1l  24 Aug 2021</span></span><br></pre></td></tr></tbody></table></figure>
+
+<h5 id="更新-openssh"><a href="#更新-openssh" class="headerlink" title="更新 openssh"></a>更新 openssh</h5><p>备份原openssh文件,卸载原openssh</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">sudo mv /etc/init.d/ssh /etc/init.d/ssh.old</span><br><span class="line">sudo mv /etc/ssh /etc/ssh.old</span><br><span class="line">sudo apt-get remove openssh-server openssh-client -y</span><br></pre></td></tr></tbody></table></figure>
+
+<p>如果卸载openssh-server报错，请检查：</p>
+<ol>
+<li>ssh所有进程是否停止，kill掉所有的ssh进程</li>
+</ol>
+ <figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">检查ssh进程pid，然后删除</span></span><br><span class="line">ps -ef |grep ssh</span><br><span class="line">kill -9 #pid#</span><br></pre></td></tr></tbody></table></figure>
+
+<ul>
+<li>如果/etc/rc6.d下有/etc/init.d/ssh系统启动文件的软连接，请删除。</li>
+</ul>
+<p>回到下载包的目录，依次执行以下命令</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">安装依赖包libpam0g-dev</span></span><br><span class="line">sudo apt-get install libpam0g-dev -y</span><br><span class="line">tar zxvf openssh-8.8p1.tar.gz</span><br><span class="line">cd openssh-8.8p1</span><br><span class="line">./configure --prefix=/usr \</span><br><span class="line">--sysconfdir=/etc/ssh \</span><br><span class="line">--with-md5-passwords \</span><br><span class="line">--with-pam --with-zlib \</span><br><span class="line">--with-ssl-dir=/usr/local \</span><br><span class="line">--with-privsep-path=/var/lib/sshd </span><br><span class="line">make -j 8</span><br><span class="line">sudo make install </span><br></pre></td></tr></tbody></table></figure>
+
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash">检查新的ssh版本</span></span><br><span class="line">ssh -V</span><br><span class="line"><span class="meta">#</span><span class="bash">显示OpenSSH_8.8p1, OpenSSL 1.1.1l  24 Aug 2021</span></span><br></pre></td></tr></tbody></table></figure>
+
+<p>完成更新，再恢复原来备份的文件。</p>
+<figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">cd /etc/ssh</span><br><span class="line">sudo mv sshd_config sshd_config.default</span><br><span class="line">sudo cp ../ssh.old/sshd_config ./</span><br><span class="line">sudo mv /etc/init.d/ssh.old /etc/init.d/ssh</span><br><span class="line">sudo systemctl unmask ssh</span><br><span class="line">sudo systemctl restart ssh</span><br></pre></td></tr></tbody></table></figure>
+
+<p>启动后可以再次用前面的ps命令检查下sshd进程是否启动；如果原来的sshd_config配置中包含了新版本不支持已经被废弃的参数，ssh启动会失败，启动日志里会提示哪些问题，可以参照问题去修改。<br>比如RSAAuthentication、KeyRegenerationInterval这些参数都已经被新版本废弃了，还有原来配置加密算法的参数Ciphers也可能导致启动失败，注释掉这些重新配置就可以了。</p>
+]]></content>
+  </entry>
+  <entry>
     <title>鲲鹏aarch64架构的centos7 安装mysql</title>
     <url>/2021/11/21/%E9%B2%B2%E9%B9%8Fcentos7-%E5%AE%89%E8%A3%85mysql/</url>
     <content><![CDATA[<p>之前使用阿里云linux服务器安装mysql没碰到什么问题，最近在鲲鹏服务器的CentOs7系统里尝试着安装mysql，结果碰到各种问题。终于零距离初步接触了解了下鲲鹏服务器的与众不同。</p>

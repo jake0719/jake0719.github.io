@@ -6,7 +6,7 @@
   <link href="https://www.jk0520.com/atom.xml" rel="self"/>
   
   <link href="https://www.jk0520.com/"/>
-  <updated>2021-11-22T09:16:03.638Z</updated>
+  <updated>2021-11-25T03:26:25.753Z</updated>
   <id>https://www.jk0520.com/</id>
   
   <author>
@@ -15,6 +15,28 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UBUNTU 16.04 升级OPENSSH 8.8P1</title>
+    <link href="https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/"/>
+    <id>https://www.jk0520.com/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</id>
+    <published>2021-11-24T03:45:00.000Z</published>
+    <updated>2021-11-25T03:26:25.753Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;因为受到监管报告，服务器有SSL/TLS协议信息泄露漏洞(CVE-2016-2183)漏洞，我们的几台ubuntu服务器要升级ssl和openssh。查了下最新的openssh版本已经8.8了，网上大部分升级教程都是低版本的ssh，还是直接升级到最新的。&lt;/p&gt;
+&lt;p&gt;先容</summary>
+        
+      
+    
+    
+    
+    
+  </entry>
   
   <entry>
     <title>鲲鹏aarch64架构的centos7 安装mysql</title>
