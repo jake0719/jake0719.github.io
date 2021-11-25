@@ -64,6 +64,7 @@
 <figure class="highlight shell"><table><tbody><tr><td class="code"><pre><span class="line">cd /etc/ssh</span><br><span class="line">sudo mv sshd_config sshd_config.default</span><br><span class="line">sudo cp ../ssh.old/sshd_config ./</span><br><span class="line">sudo mv /etc/init.d/ssh.old /etc/init.d/ssh</span><br><span class="line">sudo systemctl unmask ssh</span><br><span class="line">sudo systemctl restart ssh</span><br></pre></td></tr></tbody></table></figure>
 
 <p>启动后可以再次用前面的ps命令检查下sshd进程是否启动；如果原来的sshd_config配置中包含了新版本不支持已经被废弃的参数，ssh启动会失败，启动日志里会提示哪些问题，可以参照问题去修改。<br>比如RSAAuthentication、KeyRegenerationInterval这些参数都已经被新版本废弃了，还有原来配置加密算法的参数Ciphers也可能导致启动失败，注释掉这些重新配置就可以了。</p>
+<p>更新好ssh版本，会影响原先所有连接过的客户端。原先连接过的客户端重新连接会报错，提示.ssh/known_hosts文件里的老的某一行连接有问题，删除出错的那一行，然后重新建立新的ssh连接就好了。这是因为ssh升级，老的公钥失效了。</p>
 ]]></content>
       <tags>
         <tag>ubuntu</tag>
