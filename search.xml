@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>UBUNTU 16.04 升级OPENSSH 8.8P1</title>
+    <title>Ubuntu 16.04 升级Openssh 8.8P1</title>
     <url>/2021/11/24/UBUNTU-16-04-%E5%8D%87%E7%BA%A7OPENSSH-8-8P1/</url>
     <content><![CDATA[<p>因为受到监管报告，服务器有SSL/TLS协议信息泄露漏洞(CVE-2016-2183)漏洞，我们的几台ubuntu服务器要升级ssl和openssh。查了下最新的openssh版本已经8.8了，网上大部分升级教程都是低版本的ssh，还是直接升级到最新的。</p>
 <p>先容我吐槽下。这两年伟大的ZF在网络监管方面越来越严格，同时也意味着一般企业公司在信息安全方面支出也越来越高。做个公安部的安保等级每年要花费近十万大洋，做个通信管理局的通保每年也要花费不少。对于IT创业公司来说，真的太难了。</p>
