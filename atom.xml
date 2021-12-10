@@ -6,7 +6,7 @@
   <link href="https://www.jk0520.com/atom.xml" rel="self"/>
   
   <link href="https://www.jk0520.com/"/>
-  <updated>2021-11-25T08:13:31.640Z</updated>
+  <updated>2021-12-10T13:26:05.531Z</updated>
   <id>https://www.jk0520.com/</id>
   
   <author>
@@ -15,6 +15,39 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>鲲鹏安装ClickHouse Docker</title>
+    <link href="https://www.jk0520.com/2021/12/06/%E9%B2%B2%E9%B9%8F%E5%AE%89%E8%A3%85ClickHouse-Docker/"/>
+    <id>https://www.jk0520.com/2021/12/06/%E9%B2%B2%E9%B9%8F%E5%AE%89%E8%A3%85ClickHouse-Docker/</id>
+    <published>2021-12-06T02:47:00.000Z</published>
+    <updated>2021-12-10T13:26:05.531Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;鲲鹏服务器的运维真是累人，以前普通的应用安装在鲲鹏上要费更多的时间和精力。为了支持华为的芯片，以及熟悉下不同架构的linux系统,就当回忍者。&lt;/p&gt;
+&lt;p&gt;安装环境：&lt;/p&gt;
+&lt;ul&gt;
+&lt;li&gt;CentOs 7.9 &lt;/li&gt;
+&lt;li&gt;服务器CPU内核版本 :</summary>
+        
+      
+    
+    
+    
+    
+    <category term="CentOs" scheme="https://www.jk0520.com/tags/CentOs/"/>
+    
+    <category term="鲲鹏" scheme="https://www.jk0520.com/tags/%E9%B2%B2%E9%B9%8F/"/>
+    
+    <category term="ClickHouse" scheme="https://www.jk0520.com/tags/ClickHouse/"/>
+    
+    <category term="tsdb" scheme="https://www.jk0520.com/tags/tsdb/"/>
+    
+  </entry>
   
   <entry>
     <title>Ubuntu 16.04 升级Openssh 8.8P1</title>
